@@ -14,10 +14,16 @@
 
 package com.dragansah.filebrowser.components;
 
+import javax.inject.Inject;
+
 import org.apache.tapestry5.BindingConstants;
+import org.apache.tapestry5.Link;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.services.PageRenderLinkSource;
+
+import com.dragansah.filebrowser.pages.Index;
 
 @Import(stylesheet = "style.css")
 public class Layout
@@ -27,4 +33,11 @@ public class Layout
 	@Parameter(required = true, defaultPrefix = BindingConstants.LITERAL)
 	private String title;
 
+	@Inject
+	private PageRenderLinkSource linkSource;
+
+	public Link getIndexPage()
+	{
+		return linkSource.createPageRenderLink(Index.class);
+	}
 }

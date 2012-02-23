@@ -4,8 +4,48 @@
 		<title>${title}</title>
 	</head>
 	<body>
+		<div id="wrap">
 
-		<t:body />
+			<a id="header" href="${indexPage}">
+				<div id="headerLeftPart"></div>
+				<div id="headerCenterPart"></div>
+				<div id="headerRightPart">
+					<div id="headerRightPartTextBox">
+						<a href="#" t:type="PageLink" t:page="Help">Помош</a>
+					</div>
+				</div>
+			</a>
 
+			<div id="content">
+				<t:body />
+			</div>
+
+			<div class="push"><!--Sticky Footer Push -->
+			</div>
+		</div>
+
+		<footer>
+			<div id="footer">
+				<div id="footerLeftPart"></div>
+				<div id="footerRightPart"></div>
+				<div id="footerCenterPart">
+					<div id="footerCenterPartTextBox">
+						<div id="footerCopyright">
+						&copy;2012
+							<a href="http://www.finki.ukim.mk">Faculty of Computer
+								Science and Engineering
+							</a>
+						</div>
+						<div id="footerMenu">
+							<a href="#" t:type="PageLink" t:page="Index">Почетна</a>
+							|
+							<a href="#" t:type="PageLink" t:page="About">За Авторите</a>
+							|
+							<a href="#" t:type="PageLink" t:page="Help">Помош</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
 	</body>
 </html>
