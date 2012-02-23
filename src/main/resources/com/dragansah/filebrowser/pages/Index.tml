@@ -1,0 +1,20 @@
+<html t:type="layout" title="filebrowser Index" t:sidebarTitle="Framework Version" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+	xmlns:p="tapestry:parameter" xmlns:j="tapestry-library:jquery">
+
+	<ul class="sidebar-menu" style="float:left">
+		<t:loop source="rootDirectories" value="topDirectory">
+			<li class="${liClass}">
+				<t:eventLink t:id="selectDirectory" context="topDirectory">
+					${topDirectory.name}
+				</t:eventLink>
+			</li>
+		</t:loop>
+	</ul>
+
+	<div style="float:left" class="file-browser">
+		<t:if test="selectedTopDirectory">
+			<t:filebrowser topDirectory="selectedTopDirectory" currentDirectory="currentDirectory" />
+		</t:if>
+	</div>
+
+</html>

@@ -1,0 +1,54 @@
+body {
+	font-family: Myriad Pro, Ubuntu, Tahoma, Geneva, sans-serif;
+}
+
+.file-browser {
+	margin: 20px;
+	padding: 5px 10px;
+	border: 1px solid lightblue;
+}
+
+ul.sidebar-menu {
+	margin: 20px;
+}
+
+ul.sidebar-menu li {
+	background: url('../icons/folder.png') 2px no-repeat;
+	padding: 5px 20px;
+	list-style-type: none;
+}
+
+ul.sidebar-menu li a {
+	text-decoration: none;
+	color: #222;
+}
+
+ul.sidebar-menu>li.selected {
+	border: 1px solid lightblue;
+	background-color: #fbfbff;
+}
+
+ul.sidebar-menu li:hover {
+	background-color: #f9f9ff;
+}
+
+table.t-data-grid,table.t-data-grid tbody tr td,table.t-data-grid thead tr th
+	{
+	border: 0px solid silver;
+	padding: 5px 10px;
+}
+
+table.t-data-grid thead tr th {
+	color: #222;
+	background-color: #eee;
+}
+
+table.t-data-grid tr th a {
+	color: #222;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+table.t-data-grid tr th a:hover {
+	text-decoration: underline;
+}

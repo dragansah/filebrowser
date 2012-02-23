@@ -1,0 +1,14 @@
+ul.qq-upload-list {
+	width: auto;
+	border: 1px solid silver;
+}
+
+ul.qq-upload-list li {
+	border-top: 1px solid silver;
+	font-size: 14px;
+}
+
+span.qq-upload-size {
+	font-size: 14px;
+	font-weight: bold;
+}
