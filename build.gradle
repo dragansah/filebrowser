@@ -5,6 +5,9 @@ apply plugin: "java"
 apply plugin: "jetty"
 apply plugin: "eclipse"
 
+httpPort = 80
+jettyRun.contextPath = "/"
+
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
