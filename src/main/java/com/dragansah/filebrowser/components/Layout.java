@@ -14,6 +14,9 @@
 
 package com.dragansah.filebrowser.components;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import javax.inject.Inject;
 
 import org.apache.tapestry5.BindingConstants;
@@ -23,6 +26,8 @@ import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.services.PageRenderLinkSource;
+import org.apache.tapestry5.services.Request;
+import org.apache.tapestry5.services.Session;
 
 import com.dragansah.filebrowser.Constants;
 import com.dragansah.filebrowser.pages.Index;
@@ -39,17 +44,15 @@ public class Layout
 	@Inject
 	private PageRenderLinkSource linkSource;
 
+	@Inject
+	private Request request;
+
 	@SessionState
 	private UserInfo userInfo;
 
 	public Link getIndexPage()
 	{
 		return linkSource.createPageRenderLink(Index.class);
-	}
-
-	public String getCasServer()
-	{
-		return Constants.CAS_SERVER;
 	}
 
 	public String getAppServer()
@@ -60,5 +63,17 @@ public class Layout
 	public String getUserName()
 	{
 		return userInfo.getUsername();
+	}
+
+	Object onLogout() throws MalformedURLException
+	{
+		Session session = request.getSession(false);
+		if (session != null)
+		{
+			session.invalidate();
+			userInfo = null;
+		}
+
+		return new URL(Constants.CAS_SERVER + "/cas/logout?url=" + Constants.APP_SERVER);
 	}
 }

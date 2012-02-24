@@ -13,9 +13,9 @@
 						Најавени сте како:
 						<strong>${username}</strong>
 						<br />
-						<a href="${casServer}/cas/logout?url=${appServer}">
+						<t:eventLink t:id="logout">
 							Излез
-						</a>
+						</t:eventLink>
 					</div>
 				</div>
 				<div id="headerRightPart">
