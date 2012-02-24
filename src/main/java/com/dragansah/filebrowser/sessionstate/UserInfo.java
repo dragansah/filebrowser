@@ -25,10 +25,10 @@ public class UserInfo
 
 	public UserInfo(@Inject RequestGlobals requestGlobals)
 	{
-		// if (requestGlobals != null)
-		// if (requestGlobals.getHTTPServletRequest().getRemoteUser() != null)
-		// username = requestGlobals.getHTTPServletRequest().getRemoteUser();
-		username = "dragan.sahpaski";
+		if (requestGlobals.getHTTPServletRequest().getRemoteUser() != null)
+			username = requestGlobals.getHTTPServletRequest().getRemoteUser();
+		else
+			username = null;
 	}
 
 	public String getUsername()

@@ -5,8 +5,8 @@ apply plugin: "java"
 apply plugin: "jetty"
 apply plugin: "eclipse"
 
-sourceCompatibility = "1.5"
-targetCompatibility = "1.5"
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
 
 group = "com.dragansah"
 version = "1.0-SNAPSHOT"
@@ -73,5 +73,3 @@ test {
 
     enableAssertions = true
 }
-
-// TODO: Configure execution mode for jettyRun task
