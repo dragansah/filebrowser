@@ -115,12 +115,14 @@ public class AppModule
 		configuration.add("Timing", filter);
 	}
 
+	/**
+	 * Contribute a {@link ValueEncoder} for {@link FileModel}.
+	 */
 	public static void contributeValueEncoderSource(
 			MappedConfiguration<Class<?>, ValueEncoder<?>> conf)
 	{
 		conf.add(FileModel.class, new ValueEncoder<FileModel>()
 		{
-
 			public String toClient(FileModel value)
 			{
 				return value.getAbsolutePath();

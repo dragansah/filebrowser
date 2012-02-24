@@ -21,14 +21,17 @@ import org.apache.tapestry5.Link;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.services.PageRenderLinkSource;
 
+import com.dragansah.filebrowser.Constants;
 import com.dragansah.filebrowser.pages.Index;
+import com.dragansah.filebrowser.sessionstate.UserInfo;
 
 @Import(stylesheet = "style.css")
 public class Layout
 {
-
+	@SuppressWarnings("unused")
 	@Property
 	@Parameter(required = true, defaultPrefix = BindingConstants.LITERAL)
 	private String title;
@@ -36,8 +39,26 @@ public class Layout
 	@Inject
 	private PageRenderLinkSource linkSource;
 
+	@SessionState
+	private UserInfo userInfo;
+
 	public Link getIndexPage()
 	{
 		return linkSource.createPageRenderLink(Index.class);
+	}
+
+	public String getCasServer()
+	{
+		return Constants.CAS_SERVER;
+	}
+
+	public String getAppServer()
+	{
+		return Constants.APP_SERVER;
+	}
+
+	public String getUserName()
+	{
+		return userInfo.getUsername();
 	}
 }

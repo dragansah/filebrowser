@@ -22,9 +22,14 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.tapestry5.Asset;
+import org.apache.tapestry5.annotations.OnEvent;
 import org.apache.tapestry5.annotations.Path;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.SessionState;
+
+import com.dragansah.filebrowser.Constants;
+import com.dragansah.filebrowser.sessionstate.UserInfo;
 
 public class Index
 {
@@ -42,22 +47,30 @@ public class Index
 	@Property
 	private List<File> rootDirectories;
 
-	private String rootFolderForLoggedInUser;
-
 	@SuppressWarnings("unused")
 	@Property
 	@Path("../icons/folder.png")
 	@Inject
 	private Asset folderIcon;
 
-	void setupRender()
+	@SessionState
+	private UserInfo userInfo;
+
+	void setupRender() throws IOException
 	{
-		rootFolderForLoggedInUser = "/students/dragan.sahpaski";
+		String rootFolderForLoggedInUser = Constants.ROOT_STUDENTS_FOLDER + "/" + loggedInUser;
+		File userFolder = new File(rootFolderForLoggedInUser);
+		if (!userFolder.exists())
+			userFolder.mkdir();
+
 		rootDirectories = new ArrayList<File>();
 
-		rootDirectories.add(new File(rootFolderForLoggedInUser, "private"));
-		rootDirectories.add(new File(rootFolderForLoggedInUser, "finki"));
-		rootDirectories.add(new File(rootFolderForLoggedInUser, "public"));
+		rootDirectories.add(new File(userFolder, "private"));
+		rootDirectories.add(new File(userFolder, "finki"));
+		rootDirectories.add(new File(userFolder, "public"));
+
+		if (currentDirectory == null)
+			selectDirectory(rootDirectories.get(0));
 	}
 
 	public String getLiClass()
@@ -69,7 +82,8 @@ public class Index
 				: "";
 	}
 
-	void onSelectDirectory(File selectedTopDirectory) throws IOException
+	@OnEvent("selectDirectory")
+	void selectDirectory(File selectedTopDirectory) throws IOException
 	{
 		this.selectedTopDirectory = selectedTopDirectory;
 

@@ -5,14 +5,20 @@
 	</head>
 	<body>
 		<div id="wrap">
-
-			<a id="header" href="${indexPage}">
+			<a id="header" href="${indexPage}" style="text-decoration:none">
 				<div id="headerLeftPart"></div>
-				<div id="headerCenterPart"></div>
-				<div id="headerRightPart">
-					<div id="headerRightPartTextBox">
-						<a href="#" t:type="PageLink" t:page="Help">Помош</a>
+				<div id="headerCenterPart">
+					<div style="padding: 20px 0 0 40px;font-size: 26px; color: white; float:left">${appServer}</div>
+					<div id="headerCenterPartTextBox" style="float:right; text-align:right">
+						Најавени сте како:
+						<strong>${username}</strong>
+						<br />
+						<a href="${casServer}/cas/logout?url=${appServer}">
+							Излез
+						</a>
 					</div>
+				</div>
+				<div id="headerRightPart">
 				</div>
 			</a>
 
