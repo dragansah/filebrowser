@@ -21,6 +21,12 @@ public class Constants
 	 */
 	public static final String ROOT_USERS_FOLDER = "/students";
 
+	public static final String PRIVATE_FOLDER_NAME = "private";
+
+	public static final String FINKI_FOLDER_NAME = "finki";
+
+	public static final String PUBLIC_FOLDER_NAME = "public";
+
 	public static final String CAS_SERVER = "http://cas.finki.ukim.mk";
 
 	public static final String APP_SERVER = "files.finki.ukim.mk";

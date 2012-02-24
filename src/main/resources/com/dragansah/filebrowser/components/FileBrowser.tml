@@ -57,7 +57,7 @@
 	<t:zone t:id="mainZone" update="show">
 		Моментална локација:
 		<t:currentLocation currentDirectory="currentDirectory" topDirectory="topDirectory" />
-		<t:grid source="files" zone="^" row="file" rowsPerPage="10000" rowIndex="gridRowIndex" add="delete">
+		<t:grid source="files" zone="^" row="file" rowsPerPage="10000" rowIndex="gridRowIndex" add="${gridColumns}">
 			<p:empty>
 				<p>Тековниот директориум е празен</p>
 			</p:empty>
@@ -97,6 +97,10 @@
 					</t:if>
 				</div>
 			</p:deleteCell>
+
+			<p:linkCell>
+				<a href="${fileLink}">линк</a>
+			</p:linkCell>
 
 		</t:grid>
 	</t:zone>

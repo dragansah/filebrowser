@@ -17,34 +17,31 @@ package com.dragansah.filebrowser.components;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.activation.MimetypesFileTypeMap;
 import javax.inject.Inject;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.Block;
-import org.apache.tapestry5.StreamResponse;
+import org.apache.tapestry5.Link;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Path;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Zone;
-import org.apache.tapestry5.services.Response;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.apache.tapestry5.upload.services.UploadedFile;
 
 import com.dragansah.filebrowser.domain.FileModel;
+import com.dragansah.filebrowser.services.FileService;
 
 @Import(stylesheet = "file-browser.css")
 public class FileBrowser
 {
-
 	@Property
 	@Parameter(required = true, allowNull = false)
 	private File currentDirectory;
@@ -52,6 +49,9 @@ public class FileBrowser
 	@Property
 	@Parameter(required = true, allowNull = false)
 	private File topDirectory;
+
+	@Parameter
+	private boolean showLinkColumn;
 
 	@Inject
 	private AjaxResponseRenderer ajaxResponseRenderer;
@@ -73,6 +73,14 @@ public class FileBrowser
 
 	@Property
 	private String newDirectoryName;
+
+	public String getGridColumns()
+	{
+		if (showLinkColumn)
+			return "link, delete";
+
+		return "delete";
+	}
 
 	Object onCreateDirectory()
 	{
@@ -101,7 +109,6 @@ public class FileBrowser
 		new File(currentDirectory, newDirectoryName).mkdir();
 	}
 
-	@SuppressWarnings("unused")
 	@Property
 	private FileModel file;
 
@@ -135,28 +142,7 @@ public class FileBrowser
 
 	Object onDownloadFile(final FileModel file)
 	{
-		return new StreamResponse()
-		{
-
-			@Override
-			public void prepareResponse(Response response)
-			{
-				response.setHeader("Content-Disposition",
-						"attachment; filename=\"" + file.getFileName() + "\"");
-			}
-
-			@Override
-			public InputStream getStream() throws IOException
-			{
-				return FileUtils.openInputStream(new File(file.getAbsolutePath()));
-			}
-
-			@Override
-			public String getContentType()
-			{
-				return new MimetypesFileTypeMap().getContentType(new File(file.getAbsolutePath()));
-			}
-		};
+		return fileService.createStreamResponseFromFile(new File(file.getAbsolutePath()));
 	}
 
 	void onAjaxFileUploadFromUploadFile(UploadedFile uploadedFile)
@@ -195,4 +181,11 @@ public class FileBrowser
 		FileUtils.deleteQuietly(fileForDelete);
 	}
 
+	@Inject
+	private FileService fileService;
+
+	public Link getFileLink()
+	{
+		return fileService.createDownloadLinkFromFile(new File(file.getAbsolutePath()));
+	}
 }

@@ -23,12 +23,14 @@ import javax.inject.Inject;
 
 import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.annotations.OnEvent;
+import org.apache.tapestry5.annotations.PageActivationContext;
 import org.apache.tapestry5.annotations.Path;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 
 import com.dragansah.filebrowser.Constants;
+import com.dragansah.filebrowser.services.FileService;
 import com.dragansah.filebrowser.sessionstate.UserInfo;
 
 public class Index
@@ -56,7 +58,13 @@ public class Index
 	@SessionState
 	private UserInfo userInfo;
 
-	void setupRender() throws IOException
+	@PageActivationContext
+	private String filePathForDownload;
+
+	@Inject
+	private FileService fileService;
+
+	void setupRender() throws IOException, IllegalAccessException
 	{
 		File userFolder = new File(userInfo.getRootFolderForLoggedInUser());
 		if (!userFolder.exists())
@@ -64,12 +72,21 @@ public class Index
 
 		rootDirectories = new ArrayList<File>();
 
-		rootDirectories.add(new File(userFolder, "private"));
-		rootDirectories.add(new File(userFolder, "finki"));
-		rootDirectories.add(new File(userFolder, "public"));
+		rootDirectories.add(new File(userFolder, Constants.PRIVATE_FOLDER_NAME));
+		rootDirectories.add(new File(userFolder, Constants.FINKI_FOLDER_NAME));
+		rootDirectories.add(new File(userFolder, Constants.PUBLIC_FOLDER_NAME));
 
 		if (currentDirectory == null)
 			selectDirectory(rootDirectories.get(0));
+	}
+
+	Object onActivate() throws IllegalAccessException
+	{
+		if (filePathForDownload != null)
+			return fileService.createStreamResponseFromFile(fileService
+					.createFileFromDownloadLink(filePathForDownload));
+
+		return true;
 	}
 
 	public String getLiClass()
@@ -90,5 +107,14 @@ public class Index
 			selectedTopDirectory.mkdir();
 
 		currentDirectory = selectedTopDirectory;
+	}
+
+	public boolean isShowLinkColumn()
+	{
+		String[] split = currentDirectory.getAbsolutePath().split("/");
+		if (split.length < 4)
+			return false;
+
+		return split[3].equals(Constants.FINKI_FOLDER_NAME);
 	}
 }

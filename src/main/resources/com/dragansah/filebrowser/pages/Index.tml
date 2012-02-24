@@ -16,7 +16,8 @@
 			</td>
 			<td class="file-browser">
 				<t:if test="selectedTopDirectory">
-					<t:filebrowser topDirectory="selectedTopDirectory" currentDirectory="currentDirectory" />
+					<t:filebrowser topDirectory="selectedTopDirectory" currentDirectory="currentDirectory"
+						showLinkColumn="showLinkColumn" />
 				</t:if>
 			</td>
 		</tr>
