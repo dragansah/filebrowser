@@ -58,7 +58,7 @@ public class Index
 
 	void setupRender() throws IOException
 	{
-		String rootFolderForLoggedInUser = Constants.ROOT_STUDENTS_FOLDER + "/" + loggedInUser;
+		String rootFolderForLoggedInUser = Constants.ROOT_STUDENTS_FOLDER + "/" + userInfo.getUsername();
 		File userFolder = new File(rootFolderForLoggedInUser);
 		if (!userFolder.exists())
 			userFolder.mkdir();
