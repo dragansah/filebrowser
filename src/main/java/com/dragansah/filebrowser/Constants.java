@@ -19,7 +19,7 @@ public class Constants
 	/**
 	 * The root folder where the users files are kept.
 	 */
-	public static final String ROOT_STUDENTS_FOLDER = "/students";
+	public static final String ROOT_USERS_FOLDER = "/students";
 
 	public static final String CAS_SERVER = "http://cas.finki.ukim.mk";
 

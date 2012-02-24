@@ -19,10 +19,12 @@ import java.io.IOException;
 
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.ValueEncoder;
+import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Local;
+import org.apache.tapestry5.services.ApplicationStateManager;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.RequestFilter;
 import org.apache.tapestry5.services.RequestHandler;
@@ -30,6 +32,7 @@ import org.apache.tapestry5.services.Response;
 import org.slf4j.Logger;
 
 import com.dragansah.filebrowser.domain.FileModel;
+import com.dragansah.filebrowser.sessionstate.UserInfo;
 
 /**
  * This module is automatically included as part of the Tapestry IoC Registry, it's a good place to
@@ -119,19 +122,77 @@ public class FileBrowserModule
 	 * Contribute a {@link ValueEncoder} for {@link FileModel}.
 	 */
 	public static void contributeValueEncoderSource(
-			MappedConfiguration<Class<?>, ValueEncoder<?>> conf)
+			MappedConfiguration<Class<?>, ValueEncoder<?>> conf, final ApplicationStateManager asm)
 	{
 		conf.add(FileModel.class, new ValueEncoder<FileModel>()
 		{
 			public String toClient(FileModel value)
 			{
-				return value.getAbsolutePath();
+				return protectFile(asm, new File(value.getAbsolutePath()));
 			}
 
 			public FileModel toValue(String path)
 			{
-				return FileModel.fromFile(new File(path));
+				return FileModel.fromFile(reconstructProtectedFileFromPath(asm, path));
 			}
 		});
+
+		conf.add(File.class, new ValueEncoder<File>()
+		{
+			public String toClient(File value)
+			{
+				return protectFile(asm, value);
+			}
+
+			public File toValue(String path)
+			{
+				return reconstructProtectedFileFromPath(asm, path);
+			}
+		});
+	}
+
+	/**
+	 * Protect the given {@link File} from security attacks on the client side by stripping the root
+	 * folder path of the user folder (in the file system) from {@link File#getAbsolutePath()}.
+	 * <p>
+	 * The {@link ApplicationStateManager} is needed for obtaining the {@link UserInfo}
+	 * {@link SessionState} object.
+	 * 
+	 * @param asm
+	 * 
+	 * @param value
+	 *            The file that needs to be encoded i.e. stripped.
+	 * 
+	 * @return The stripped {@link File#getAbsolutePath()}
+	 * 
+	 * @see FileBrowserModule#reconstructProtectedFileFromPath(ApplicationStateManager, String)
+	 */
+	private static String protectFile(final ApplicationStateManager asm, File value)
+	{
+		String rootFolder = asm.get(UserInfo.class).getRootFolderForLoggedInUser();
+		return value.getAbsolutePath().replace(rootFolder, "");
+	}
+
+	/**
+	 * Reconstruct the protected {@link File} by adding the root folder path of the user folder (in
+	 * the file system) to the path obtained from the client side.
+	 * <p>
+	 * The {@link ApplicationStateManager} is needed for obtaining the {@link UserInfo}
+	 * {@link SessionState} object.
+	 * 
+	 * @param asm
+	 * 
+	 * @param path
+	 *            The file path obtained from the client side
+	 * 
+	 * @return The reconstructed {@link File}
+	 * 
+	 * @see FileBrowserModule#protectFile(ApplicationStateManager, File)
+	 */
+	private static File reconstructProtectedFileFromPath(final ApplicationStateManager asm,
+			String path)
+	{
+		String rootFolder = asm.get(UserInfo.class).getRootFolderForLoggedInUser();
+		return new File(rootFolder + path);
 	}
 }

@@ -17,20 +17,27 @@ package com.dragansah.filebrowser.sessionstate;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.RequestGlobals;
 
+import com.dragansah.filebrowser.Constants;
+
 public class UserInfo
 {
 	private final String username;
 
 	public UserInfo(@Inject RequestGlobals requestGlobals)
 	{
-		//if (requestGlobals != null)
-			//if (requestGlobals.getHTTPServletRequest().getRemoteUser() != null)
-				//username = requestGlobals.getHTTPServletRequest().getRemoteUser();
-		username ="dragan.sahpaski";
+		// if (requestGlobals != null)
+		// if (requestGlobals.getHTTPServletRequest().getRemoteUser() != null)
+		// username = requestGlobals.getHTTPServletRequest().getRemoteUser();
+		username = "dragan.sahpaski";
 	}
 
 	public String getUsername()
 	{
 		return username;
+	}
+
+	public String getRootFolderForLoggedInUser()
+	{
+		return Constants.ROOT_USERS_FOLDER + "/" + username;
 	}
 }
