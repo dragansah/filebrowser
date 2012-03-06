@@ -11,6 +11,6 @@ Contributions are welcome.
   <li>Dragan Sahpaski</li>
   <li>Boro Jakimovski</li>
   <li>Vangel Ajanovski</li>
-  <li>Kjiril Kjiroski</li>
+  <li>Kiril Kjiroski</li>
 </ul>
 
