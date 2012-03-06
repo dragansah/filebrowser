@@ -6,3 +6,10 @@ feel free to use it here <a href="http://files.finki.ukim.mk">http://files.finki
 
 Contributions are welcome.
 
+<h3>Contributors</h3>
+<ul>
+  <li>Dragan Sahpaski</li>
+  <li>Boro Jakimovski</li>
+  <li>Vangel Ajanovski</li>
+</ul>
+
