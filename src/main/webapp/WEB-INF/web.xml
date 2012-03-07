@@ -10,16 +10,16 @@
 
 	<context-param>
 		<param-name>casServerLoginUrl</param-name>
-		<param-value>http://cas.finki.ukim.mk/cas/login
+		<param-value>https://cas.finki.ukim.mk/cas/login
 			</param-value>
 	</context-param>
 	<context-param>
 		<param-name>casServerUrlPrefix</param-name>
-		<param-value>http://cas.finki.ukim.mk/cas</param-value>
+		<param-value>https://cas.finki.ukim.mk/cas</param-value>
 	</context-param>
 	<context-param>
 		<param-name>service</param-name>
-		<param-value>http://files.finki.ukim.mk</param-value>
+		<param-value>https://files.finki.ukim.mk</param-value>
 	</context-param>
 
 	<filter>
