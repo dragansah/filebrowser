@@ -19,7 +19,7 @@
 	</context-param>
 	<context-param>
 		<param-name>service</param-name>
-		<param-value>http://files.finki.ukim.mk</param-value>
+		<param-value>http://files.finki.ukim.mk/</param-value>
 	</context-param>
 
 	<filter>
