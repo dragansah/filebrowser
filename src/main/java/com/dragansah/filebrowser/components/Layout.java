@@ -74,6 +74,7 @@ public class Layout
 			userInfo = null;
 		}
 
-		return new URL(Constants.CAS_SERVER + "/cas/logout?url=" + Constants.APP_SERVER);
+		return new URL(Constants.CAS_SERVER + "/cas/logout?url=http://" + Constants.APP_SERVER
+				+ "/");
 	}
 }
