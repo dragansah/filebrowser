@@ -27,7 +27,7 @@ public class Constants
 
 	public static final String PUBLIC_FOLDER_NAME = "public";
 
-	public static final String CAS_SERVER = "http://cas.finki.ukim.mk";
+	public static final String CAS_SERVER = "https://cas.finki.ukim.mk";
 
 	public static final String APP_SERVER = "files.finki.ukim.mk";
 }
