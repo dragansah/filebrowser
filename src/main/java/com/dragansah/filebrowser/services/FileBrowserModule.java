@@ -22,7 +22,9 @@ import org.apache.tapestry5.ValueEncoder;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
+import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.Local;
+import org.apache.tapestry5.services.ClasspathAssetAliasManager;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.RequestFilter;
 import org.apache.tapestry5.services.RequestHandler;
@@ -52,6 +54,12 @@ public class FileBrowserModule
 			MappedConfiguration<String, Object> configuration)
 	{
 		configuration.add(SymbolConstants.SUPPORTED_LOCALES, "en, MK_mk");
+	}
+
+	@Contribute(ClasspathAssetAliasManager.class)
+	public static void setupAssetsAliases(MappedConfiguration<String, String> configuration)
+	{
+		configuration.add("filebrowser-0.0.1", "com/dragansah/filebrowser");
 	}
 
 	/**
