@@ -47,7 +47,6 @@ public class FileBrowserModule
 	public static void contributeFactoryDefaults(MappedConfiguration<String, Object> configuration)
 	{
 		configuration.override(SymbolConstants.APPLICATION_VERSION, "1.0-SNAPSHOT");
-		configuration.override(SymbolConstants.PRODUCTION_MODE, false);
 	}
 
 	public static void contributeApplicationDefaults(

@@ -3,9 +3,9 @@
 
 	<t:jquery.dialog t:clientId="uploadDialog"
 		params="literal:{title: 'Закачување на датотеки', width: 400px, max-height: 500px, modal: true, position: [400,100]}">
-		Големината на една датотека не смее да надминува 100 MB !
+		Големината на една датотека не смее да надминува 250 MB !
 		<p style="max-height: 200px">
-			<j:ajaxUpload t:id="uploadFile" t:multiple="true" t:sizeLimit="100M" />
+			<j:ajaxUpload t:id="uploadFile" t:multiple="true" t:sizeLimit="250M" />
 		</p>
 		<t:form t:id="uploadFilesForm">
 			<t:submit t:id="cancelSave" value="Затвори" />

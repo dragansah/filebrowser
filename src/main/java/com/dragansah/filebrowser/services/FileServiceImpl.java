@@ -34,7 +34,7 @@ public class FileServiceImpl implements FileService
 	 * @param asm
 	 * 
 	 * @param value
-	 *            The file that needs to be encoded i.e. stripped.
+	 *          The file that needs to be encoded i.e. stripped.
 	 * 
 	 * @return The stripped {@link File#getAbsolutePath()}
 	 * 
@@ -56,7 +56,7 @@ public class FileServiceImpl implements FileService
 	 * @param asm
 	 * 
 	 * @param path
-	 *            The file path obtained from the client side
+	 *          The file path obtained from the client side
 	 * 
 	 * @return The reconstructed {@link File}
 	 * 
@@ -65,7 +65,11 @@ public class FileServiceImpl implements FileService
 	public File reconstructProtectedFileFromPath(String path)
 	{
 		String rootFolder = getUserInfo().getRootFolderForLoggedInUser();
-		return new File(rootFolder + path);
+		File f = new File(rootFolder + path);
+		// allow access only in the users root folder
+		if (!f.getAbsolutePath().startsWith(rootFolder))
+			return new File(rootFolder);
+		return f;
 	}
 
 	private UserInfo getUserInfo()
@@ -89,8 +93,7 @@ public class FileServiceImpl implements FileService
 		String[] split = filePath.split("/");
 
 		if (!split[2].equals(Constants.FINKI_FOLDER_NAME))
-			throw new IllegalAccessException(
-					"You don't have the permissions to view the given folder.");
+			throw new IllegalAccessException("You don't have the permissions to view the given folder.");
 
 		return new File(Constants.ROOT_USERS_FOLDER + filePath);
 	}
@@ -103,8 +106,8 @@ public class FileServiceImpl implements FileService
 			@Override
 			public void prepareResponse(Response response)
 			{
-				response.setHeader("Content-Disposition",
-						"attachment; filename=\"" + file.getName() + "\"");
+				response
+						.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
 			}
 
 			@Override
