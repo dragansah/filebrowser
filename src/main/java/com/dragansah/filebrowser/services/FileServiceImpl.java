@@ -66,9 +66,16 @@ public class FileServiceImpl implements FileService
 	{
 		String rootFolder = getUserInfo().getRootFolderForLoggedInUser();
 		File f = new File(rootFolder + path);
-		// allow access only in the users root folder
-		if (!f.getAbsolutePath().startsWith(rootFolder))
+		try
+		{
+			// allow access only in the users root folder
+			if (!f.getCanonicalPath().startsWith(rootFolder))
+				return new File(rootFolder);
+		}
+		catch (IOException e)
+		{
 			return new File(rootFolder);
+		}
 		return f;
 	}
 
