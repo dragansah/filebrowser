@@ -49,10 +49,10 @@ public class FileBrowserModule
 		configuration.override(SymbolConstants.APPLICATION_VERSION, "1.0-SNAPSHOT");
 	}
 
-	public static void contributeApplicationDefaults(
-			MappedConfiguration<String, Object> configuration)
+	public static void contributeApplicationDefaults(MappedConfiguration<String, Object> configuration)
 	{
 		configuration.add(SymbolConstants.SUPPORTED_LOCALES, "en, MK_mk");
+		configuration.add(SymbolConstants.START_PAGE_NAME, "browse");
 	}
 
 	@Contribute(ClasspathAssetAliasManager.class)
@@ -64,9 +64,9 @@ public class FileBrowserModule
 	/**
 	 * This is a service definition, the service will be named "TimingFilter". The interface,
 	 * RequestFilter, is used within the RequestHandler service pipeline, which is built from the
-	 * RequestHandler service configuration. Tapestry IoC is responsible for passing in an
-	 * appropriate Logger instance. Requests for static resources are handled at a higher level, so
-	 * this filter will only be invoked for Tapestry related requests.
+	 * RequestHandler service configuration. Tapestry IoC is responsible for passing in an appropriate
+	 * Logger instance. Requests for static resources are handled at a higher level, so this filter
+	 * will only be invoked for Tapestry related requests.
 	 * <p/>
 	 * <p/>
 	 * Service builder methods are useful when the implementation is inline as an inner class (as
@@ -74,10 +74,9 @@ public class FileBrowserModule
 	 * bind() method instead.
 	 * <p/>
 	 * <p/>
-	 * If this method was named "build", then the service id would be taken from the service
-	 * interface and would be "RequestFilter". Since Tapestry already defines a service named
-	 * "RequestFilter" we use an explicit service id that we can reference inside the contribution
-	 * method.
+	 * If this method was named "build", then the service id would be taken from the service interface
+	 * and would be "RequestFilter". Since Tapestry already defines a service named "RequestFilter" we
+	 * use an explicit service id that we can reference inside the contribution method.
 	 */
 	public RequestFilter buildTimingFilter(final Logger log)
 	{
@@ -110,8 +109,8 @@ public class FileBrowserModule
 	 * This is a contribution to the RequestHandler service configuration. This is how we extend
 	 * Tapestry using the timing filter. A common use for this kind of filter is transaction
 	 * management or security. The @Local annotation selects the desired service by type, but only
-	 * from the same module. Without @Local, there would be an error due to the other service(s)
-	 * that implement RequestFilter (defined in other modules).
+	 * from the same module. Without @Local, there would be an error due to the other service(s) that
+	 * implement RequestFilter (defined in other modules).
 	 */
 	public void contributeRequestHandler(OrderedConfiguration<RequestFilter> configuration,
 			@Local RequestFilter filter)
@@ -156,4 +155,22 @@ public class FileBrowserModule
 		});
 	}
 
+//	@Contribute(WebSecurityManager.class)
+//	public static void addRealms(Configuration<Realm> configuration, @Autobuild CasRealm casRealm)
+//	{
+//		casRealm.setCasServerUrlPrefix("https://cas.finki.ukim.mk/cas/");
+//		casRealm.setCasService("http://files.finki.ukim.mk/");
+//		configuration.add(casRealm);
+//	}
+//
+//	@Contribute(HttpServletRequestFilter.class)
+//	@Security
+//	public static void securePaths(Configuration<SecurityFilterChain> configuration,
+//			SecurityFilterChainFactory factory, final ApplicationGlobals applicationgGlobals,
+//			@Symbol(SymbolConstants.PRODUCTION_MODE) final boolean productionMode,
+//			@Autobuild CasFilterRedirect casFilter) throws ServletException
+//	{
+//		casFilter.setFailureUrl("/error");
+//		configuration.add(factory.createChain("/").add(casFilter).build());
+//	}
 }

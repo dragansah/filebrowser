@@ -25,7 +25,7 @@ public class UserInfo
 
 	public UserInfo(@Inject RequestGlobals requestGlobals)
 	{
-		username = requestGlobals.getHTTPServletRequest().getRemoteUser();
+		username = requestGlobals.getRequest().getHeader("CAS-User");
 	}
 
 	public String getUsername()
